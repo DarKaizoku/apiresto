@@ -1,8 +1,12 @@
 import 'reflect-metadata';
 import * as dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
-import { User } from './entity/User';
+import { Users } from './entity/Users';
+import { Restos } from './entity/Restos';
+import { Menus } from './entity/Menus';
+import { Commandes } from './entity/Commandes';
 
+dotenv.config({ path: '.env' }); //corrige le probleme "password" must be a string
 export const AppDataSource = new DataSource({
         type: 'postgres',
         port: 5432,
@@ -12,7 +16,7 @@ export const AppDataSource = new DataSource({
         password: process.env.DB_PASSWORD,
         synchronize: true,
         logging: false,
-        entities: [User],
+        entities: [Users, Restos, Menus, Commandes],
         migrations: [],
         subscribers: [],
 });

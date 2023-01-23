@@ -1,20 +1,22 @@
-import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
+import { AppDataSource } from './data-source';
+import { Commandes } from './entity/Commandes';
+import { Menus } from './entity/Menus';
+import { Users } from './entity/Users';
+import { TCommande } from './types/TCommande';
 
-AppDataSource.initialize().then(async () => {
+AppDataSource.initialize()
+        .then(async () => {
+                /* const commande1 = new Commandes();
 
-    console.log("Inserting a new user into the database...")
-    const user = new User()
-    user.firstName = "Timber"
-    user.lastName = "Saw"
-    user.age = 25
-    await AppDataSource.manager.save(user)
-    console.log("Saved a new user with id: " + user.id)
+                commande1.user = 1;
+                commande1.resto = 3;
+                commande1.menus = 1;
 
-    console.log("Loading users from the database...")
-    const users = await AppDataSource.manager.find(User)
-    console.log("Loaded users: ", users)
+                await AppDataSource.manager.save(commande1); */
+                const commande = await AppDataSource.manager.findOneBy({
+                        menu_id: 1,
+                });
 
-    console.log("Here you can setup and run express / fastify / any other framework.")
-
-}).catch(error => console.log(error))
+                console.log(commande);
+        })
+        .catch((error) => console.log(error));
