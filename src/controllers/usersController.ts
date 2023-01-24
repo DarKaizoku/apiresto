@@ -52,7 +52,7 @@ export class UsersController {
                                 name
                         );
 
-                        if (dataUser.username) {
+                        if (dataUser) {
                                 return res.status(400).json({
                                         status: EStatus.FAIL,
                                         message:
@@ -97,6 +97,32 @@ export class UsersController {
                         const dataUser = await usersServices.getDataUserbyName(
                                 name
                         );
+                        if (!dataUser) {
+                                return res.status(400).json({
+                                        status: EStatus.FAIL,
+                                        message:
+                                                EMessageStatus.Unknown +
+                                                `${name}`,
+                                });
+                        }
+                        const hash = dataUser.password;
+                        bcrypt.compare(password, hash, async (err, result) => {
+                                const id = dataUser.user_id;
+                                const token = jwt.sign({ id }, secreToken);
+
+                                if (result) {
+                                        res.status(200).json({
+                                                status: EStatus.OK,
+                                                message: EMessageStatus.Connected,
+                                                token: token,
+                                        });
+                                } else {
+                                        res.status(401).json({
+                                                status: EStatus.FAIL,
+                                                message: EMessageStatus.passwordKO,
+                                        });
+                                }
+                        });
                 } catch (error) {
                         console.log(error);
                         res.status(500).json({

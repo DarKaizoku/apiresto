@@ -9,6 +9,6 @@ usersRouter.get('/', usersController.getUsers);
 
 usersRouter.post('/register', usersController.register);
 
-usersRouter.post('/login');
+usersRouter.post('/login', usersController.login);
 
 export default usersRouter;

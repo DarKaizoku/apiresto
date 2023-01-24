@@ -4,7 +4,7 @@ import { Users } from '../entity/Users';
 
 const dbManager = AppDataSource.manager;
 export class UsersServices {
-        async AllUsers() {
+        async AllUsers(): Promise<Users[] | undefined> {
                 const users: Users[] | undefined = await Users.find();
 
                 if (users[0]) {
@@ -20,7 +20,10 @@ export class UsersServices {
                 }
                 return undefined;
         }
-        async addUser(name: string, password: string) {
+        async addUser(
+                name: string,
+                password: string
+        ): Promise<Users | undefined> {
                 const newUser = new Users();
                 newUser.username = name;
                 newUser.password = password;
