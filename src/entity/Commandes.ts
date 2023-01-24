@@ -1,14 +1,12 @@
 import { type } from 'os';
 import {
+        BaseEntity,
         Column,
         Entity,
         JoinColumn,
-        JoinTable,
-        ManyToMany,
-        ManyToOne,
         OneToMany,
+        OneToOne,
         PrimaryGeneratedColumn,
-        QueryResult,
 } from 'typeorm';
 import { Menus } from './Menus';
 import { Restos } from './Restos';
@@ -27,18 +25,18 @@ import { Users } from './Users';
         @Column({ type: 'simple-array' })
         menus_prix: number[] | number;
 } */
-export class Commandes {
+export class Commandes extends BaseEntity {
         @PrimaryGeneratedColumn()
         commande_id: number;
-        @ManyToOne((type) => Users)
+        @OneToOne(() => Users, (user) => user.user_id)
         @JoinColumn()
         user: number;
-        @ManyToOne((type) => Restos)
-        @JoinColumn()
-        resto: number;
+        @OneToOne(() => Restos, (resto) => resto.resto_ville)
+        @JoinColumn({ referencedColumnName: 'resto_ville' })
+        resto: string;
 
-        @ManyToMany((type) => Menus)
-        @JoinTable({
+        @OneToMany(() => Menus, (menu) => menu.menu_id)
+        /* @JoinTable({
                 name: 'commandes_menus', // table name for the junction table of this relation
                 joinColumn: {
                         name: 'commandes',
@@ -48,6 +46,6 @@ export class Commandes {
                         name: 'menus',
                         referencedColumnName: 'menu_id',
                 },
-        })
-        menus: number[] | number;
+        }) */
+        menus: Number[];
 }

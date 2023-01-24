@@ -11,16 +11,21 @@
    "dependencies": {
       "@types/bcrypt": "^5.0.0",
       "@types/dotenv": "^8.2.0",
+      "@types/express": "^4.17.15",
       "@types/jsonwebtoken": "^9.0.1",
+      "@types/nodemon": "^1.19.2",
       "bcrypt": "^5.1.0",
       "dotenv": "^16.0.3",
+      "express": "^4.18.2",
       "jsonwebtoken": "^9.0.0",
+      "nodemon": "^2.0.20",
       "pg": "^8.4.0",
       "reflect-metadata": "^0.1.13",
       "typeorm": "0.3.11"
    },
    "scripts": {
       "start": "ts-node src/index.ts",
+      "start:dev": "nodemon",
       "typeorm": "typeorm-ts-node-commonjs"
    }
 }

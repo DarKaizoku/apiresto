@@ -1,14 +1,14 @@
 import {
+        BaseEntity,
         Column,
         Entity,
-        JoinTable,
-        ManyToMany,
+        ManyToOne,
         PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Commandes } from './Commandes';
 
 @Entity()
-export class Menus {
+export class Menus extends BaseEntity {
         @PrimaryGeneratedColumn()
         menu_id: Number;
         @Column({ type: 'varchar' })
@@ -16,8 +16,8 @@ export class Menus {
         @Column({ type: 'numeric' })
         menu_prix: Number;
 
-        @ManyToMany((type) => Commandes)
-        @JoinTable({
+        @ManyToOne((type) => Commandes, (commandes) => commandes.menus)
+        /* @JoinTable({
                 name: 'commandes_menus', // table name for the junction table of this relation
                 joinColumn: {
                         name: 'menus',
@@ -27,6 +27,6 @@ export class Menus {
                         name: 'commandes',
                         referencedColumnName: 'commande_id',
                 },
-        })
+        }) */
         menus: Commandes[] | Commandes;
 }

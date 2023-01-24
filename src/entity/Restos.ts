@@ -1,7 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+        BaseEntity,
+        Column,
+        Entity,
+        PrimaryGeneratedColumn,
+        Unique,
+} from 'typeorm';
 
 @Entity()
-export class Restos {
+@Unique(['resto_ville'])
+export class Restos extends BaseEntity {
         @PrimaryGeneratedColumn()
         resto_id: number;
         @Column({ type: 'varchar' })

@@ -1,8 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+        BaseEntity,
+        Column,
+        Entity,
+        OneToMany,
+        PrimaryGeneratedColumn,
+        Unique,
+} from 'typeorm';
 
 //pkoi po faire enum pour le role admin/user !!
 @Entity()
-export class Users {
+@Unique(['username'])
+export class Users extends BaseEntity {
         @PrimaryGeneratedColumn()
         user_id: number;
         @Column({ type: 'varchar' })
