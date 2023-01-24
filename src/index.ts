@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Request, Response } from 'express';
 import { AppDataSource } from './data-source';
 import { Menus } from './entity/Menus';
+import restaurantsRouter from './routers/restaurantsRouter';
 
 import usersRouter from './routers/usersRouter';
 
@@ -38,6 +39,7 @@ AppDataSource.initialize()
                 });
 
                 app.use('/api/users', usersRouter);
+                app.use('/api/restaurants/', restaurantsRouter);
 
                 app.get('/api/menus', async (req: Request, res: Response) => {
                         console.log('test');

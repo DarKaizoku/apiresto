@@ -17,14 +17,14 @@ export class UsersController {
 
                         if (users === undefined) {
                                 res.status(404).json({
-                                        status: 'FAIL',
-                                        message: 'Aucun article trouvé',
+                                        status: EStatus.FAIL,
+                                        message: EMessageStatus.checkData,
                                         data: null,
                                 });
                         } else {
                                 res.status(200).json({
-                                        status: 'SUCCESS',
-                                        message: 'Voici les articles',
+                                        status: EStatus.OK,
+                                        message: 'Voici tous les users :',
                                         data: users,
                                 });
                         }

@@ -1,8 +1,5 @@
-import { QueryResult } from 'typeorm';
-import { AppDataSource } from '../data-source';
 import { Users } from '../entity/Users';
 
-const dbManager = AppDataSource.manager;
 export class UsersServices {
         async AllUsers(): Promise<Users[] | undefined> {
                 const users: Users[] | undefined = await Users.find();
@@ -28,7 +25,7 @@ export class UsersServices {
                 newUser.username = name;
                 newUser.password = password;
 
-                await dbManager.save(newUser);
+                await Users.save(newUser);
 
                 const newOK = await Users.findOneBy({
                         username: name,

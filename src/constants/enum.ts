@@ -18,4 +18,12 @@ export enum EMessageStatus {
         Connected = `Vous êtes bien connecté.e !!`,
 
         passwordKO = `Le mot de passe ne corresponnd pas !!`,
+
+        dataOK = 'Création réussie !!',
+
+        dataKO = 'Création échouée !!!',
+
+        updateOK = 'Modification réussie !!',
+
+        updateKO = 'Modification échouée !!!',
 }
