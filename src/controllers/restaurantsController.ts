@@ -117,7 +117,7 @@ export class RestaurantsController {
                                 ? true
                                 : false;
 
-                        if (checkNew) {
+                        if (!checkNew) {
                                 return res.status(400).json({
                                         status: EStatus.FAIL,
                                         message: EMessageStatus.x2,
