@@ -12,4 +12,10 @@ export enum EMessageStatus {
         checkData = 'Vérifiez vos données saisies !!',
 
         x2 = 'Une des données que vous avez saisie existe déjà, merci de la modifier !!',
+
+        Unknown = 'Donnée.s inexistante.s : ',
+
+        Connected = `Vous êtes bien connecté.e !!`,
+
+        passwordKO = `Le mot de passe ne corresponnd pas !!`,
 }
