@@ -84,7 +84,8 @@ export class RestaurantsController {
         }
 
         async updateRestaurantbyName(req: Request, res: Response) {
-                const id = req.body.id;
+                const id = req.body.idToken;
+                const name = req.body.nameToken;
                 const oldVille: string = req.body.oldVille;
                 const newVille: string = req.body.newVille;
 

@@ -18,7 +18,8 @@ export function verifyToken(req: Request, res: Response, next) {
                                         message: 'Authentification échouée !!',
                                 });
                         } else {
-                                req.body.id = decoded.id;
+                                req.body.idToken = decoded.id;
+                                req.body.nameToken = decoded.name;
                                 next();
                         }
                 });
