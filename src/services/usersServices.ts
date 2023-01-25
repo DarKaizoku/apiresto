@@ -17,10 +17,7 @@ export class UsersServices {
                 }
                 return undefined;
         }
-        async addUser(
-                name: string,
-                password: string
-        ): Promise<Users | undefined> {
+        async addUser(name: string, password: string) {
                 const newUser = new Users();
                 newUser.username = name;
                 newUser.password = password;

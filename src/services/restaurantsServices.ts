@@ -1,3 +1,4 @@
+import { AppDataSource } from '../data-source';
 import { Restos } from '../entity/Restos';
 
 export class RestaurantsServices {
@@ -35,6 +36,20 @@ export class RestaurantsServices {
 
                 if (dataUpdated) {
                         return dataUpdated;
+                }
+                return undefined;
+        }
+
+        async deleteRestaurant(id: number): Promise<Restos | undefined> {
+                const dataCheck = await Restos.findOneBy({ resto_id: id });
+
+                await Restos.remove(dataCheck);
+
+                const dataDeleted = await Restos.findOneByOrFail({
+                        resto_id: id,
+                });
+                if (dataDeleted) {
+                        return dataCheck;
                 }
                 return undefined;
         }

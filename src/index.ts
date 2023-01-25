@@ -39,7 +39,7 @@ AppDataSource.initialize()
 
                 app.use('/api/users', usersRouter);
                 app.use('/api/restaurants', restaurantsRouter);
-                app.use('api/menus', menusRouter);
+                app.use('/api/menus', menusRouter);
 
                 app.listen(port, () => {
                         console.log(

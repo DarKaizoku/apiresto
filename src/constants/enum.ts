@@ -26,4 +26,6 @@ export enum EMessageStatus {
         updateOK = 'Modification réussie !!',
 
         updateKO = 'Modification échouée !!!',
+
+        createdOK = 'La donnée a bien été créée !!',
 }
