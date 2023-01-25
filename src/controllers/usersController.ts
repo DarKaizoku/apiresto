@@ -38,8 +38,8 @@ export class UsersController {
         }
 
         async register(req: Request, res: Response) {
-                const name = req.body.name;
-                const password = req.body.password;
+                const name: string = req.body.name;
+                const password: string = req.body.password;
 
                 if (name === undefined || password === undefined) {
                         return res.status(400).json({
@@ -84,10 +84,10 @@ export class UsersController {
         }
 
         async login(req: Request, res: Response) {
-                const name = req.body.name;
-                const password = req.body.password;
+                const name: string = req.body.name;
+                const password: string = req.body.password;
 
-                if (name === undefined || password === undefined) {
+                if (!name || !password) {
                         return res.status(400).json({
                                 status: EStatus.FAIL,
                                 message: EMessageStatus.checkData,

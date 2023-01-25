@@ -86,10 +86,10 @@ export class RestaurantsController {
 
         async updateRestaurant(req: Request, res: Response) {
                 const id = req.body.id;
-                const oldVille = req.body.oldVille;
-                const newVille = req.body.newVille;
+                const oldVille: string = req.body.oldVille;
+                const newVille: string = req.body.newVille;
 
-                if (newVille === undefined || oldVille === undefined) {
+                if (!newVille || !oldVille) {
                         return res.status(404).json({
                                 status: EStatus.FAIL,
                                 message: EMessageStatus.checkData,
@@ -104,7 +104,8 @@ export class RestaurantsController {
                         )
                                 ? true
                                 : false;
-                        if (!checkOld) {
+
+                        if (checkOld) {
                                 return res.status(400).json({
                                         status: EStatus.FAIL,
                                         message: EMessageStatus.Unknown,
