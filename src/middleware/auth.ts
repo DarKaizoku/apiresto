@@ -19,7 +19,6 @@ export function verifyToken(req: Request, res: Response, next) {
                                 });
                         } else {
                                 req.body.idToken = decoded.id;
-                                req.body.nameToken = decoded.name;
                                 next();
                         }
                 });
