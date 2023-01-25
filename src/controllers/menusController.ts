@@ -166,8 +166,22 @@ export class MenuController {
                 status: EStatus.FAIL,
                 message: EMessageStatus.checkData
             });
-        }
+        };
+        
         try {
+            /*const menuCheck = menuService.AllMenus();
+            console.log('test');
+            
+            console.log(menuCheck);
+            
+            if (!menuCheck[0]) {
+                return res.status(404).json({
+                    status: EStatus.FAIL,
+                    message:
+                        EMessageStatus.Unknown +
+                        `n° menu => ${id}`,
+                });
+            }*/
             const byeMenu = await menuService.suppMenu(
                 id
             ); if (byeMenu) {

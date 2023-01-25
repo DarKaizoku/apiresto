@@ -5,7 +5,7 @@ import { verifyToken } from '../middleware/auth';
 const menusRouter = Router();
 const menusController = new MenuController();
 
-menusRouter.get('/', menusController.getAllMenus);
+menusRouter.get('/',verifyToken, menusController.getAllMenus);
 menusRouter.get('/nom/' ,menusController.getMenuByName);
 menusRouter.post('/' , menusController.createMenu);
 menusRouter.put('/:id' ,menusController.updateMenu);

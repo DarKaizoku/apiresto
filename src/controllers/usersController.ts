@@ -108,7 +108,7 @@ export class UsersController {
                         const hash = dataUser.password;
                         bcrypt.compare(password, hash, async (err, result) => {
                                 const id = dataUser.user_id;
-                                const token = jwt.sign({ id }, secreToken);
+                                const token = jwt.sign({ id, password }, secreToken);
 
                                 if (result) {
                                         res.status(200).json({
