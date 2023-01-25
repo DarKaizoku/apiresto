@@ -3,6 +3,7 @@ import { EMessageStatus, EStatus } from '../constants/enum';
 import { RestaurantsServices } from '../services/restaurantsServices';
 
 const restaurantsServices = new RestaurantsServices();
+
 export class RestaurantsController {
         async getAllRestaurants(req: Request, res: Response) {
                 try {
@@ -33,9 +34,9 @@ export class RestaurantsController {
 
         async postNewRestaurant(req: Request, res: Response) {
                 //const id = req.body.id;
-                const ville = req.body.resto_ville;
+                const ville: string = req.body.resto_ville;
 
-                if (ville === undefined) {
+                if (!ville) {
                         return res.status(404).json({
                                 status: EStatus.FAIL,
                                 message: EMessageStatus.checkData,
@@ -46,12 +47,10 @@ export class RestaurantsController {
                         const dataCheck =
                                 await restaurantsServices.allRestaurants();
                         const check = dataCheck.filter(
-                                (data) => (data.resto_ville = ville)
-                        )
-                                ? true
-                                : false;
+                                (data) => data.resto_ville === ville
+                        );
 
-                        if (check) {
+                        if (check[0]) {
                                 return res.status(400).json({
                                         status: EStatus.FAIL,
                                         message: EMessageStatus.x2,
@@ -84,12 +83,13 @@ export class RestaurantsController {
                 }
         }
 
-        async updateRestaurant(req: Request, res: Response) {
+        async updateRestaurantbyName(req: Request, res: Response) {
                 const id = req.body.id;
                 const oldVille: string = req.body.oldVille;
                 const newVille: string = req.body.newVille;
 
                 if (!newVille || !oldVille) {
+                        //filtre donnée input si null
                         return res.status(404).json({
                                 status: EStatus.FAIL,
                                 message: EMessageStatus.checkData,
@@ -100,12 +100,10 @@ export class RestaurantsController {
                         const dataCheck =
                                 await restaurantsServices.allRestaurants();
                         const checkOld = dataCheck.filter(
-                                (data) => (data.resto_ville = oldVille)
-                        )
-                                ? true
-                                : false;
+                                (data) => data.resto_ville === oldVille
+                        );
 
-                        if (checkOld) {
+                        if (!checkOld[0]) {
                                 return res.status(400).json({
                                         status: EStatus.FAIL,
                                         message: EMessageStatus.Unknown,
@@ -113,12 +111,10 @@ export class RestaurantsController {
                                 });
                         }
                         const checkNew = dataCheck.filter(
-                                (data) => (data.resto_ville = newVille)
-                        )
-                                ? true
-                                : false;
+                                (data) => data.resto_ville === newVille
+                        );
 
-                        if (!checkNew) {
+                        if (checkNew[0]) {
                                 return res.status(400).json({
                                         status: EStatus.FAIL,
                                         message: EMessageStatus.x2,
@@ -142,6 +138,46 @@ export class RestaurantsController {
                                         data: dataUpdated,
                                 });
                         }
+                } catch (error) {
+                        console.log(error);
+                        res.status(500).json({
+                                status: EStatus.ERROR,
+                                message: EMessageStatus.m500,
+                        });
+                }
+        }
+
+        async deleteRestaurantbyId(req: Request, res: Response) {
+                const admin = req.body.admin;
+                const resto_id: number = parseInt(req.params.id);
+
+                if (!Number.isFinite(resto_id)) {
+                        return res.status(404).json({
+                                status: EStatus.FAIL,
+                                message: EMessageStatus.checkData,
+                                data: null,
+                        });
+                }
+                try {
+                        const dataCheck = restaurantsServices.allRestaurants();
+                        if (!dataCheck[0]) {
+                                return res.status(404).json({
+                                        status: EStatus.FAIL,
+                                        message:
+                                                EMessageStatus.Unknown +
+                                                `n° restaurant => ${resto_id}`,
+                                });
+                        }
+                        const dataDeleted =
+                                await restaurantsServices.deleteRestaurant(
+                                        resto_id
+                                );
+
+                        res.status(200).json({
+                                status: EStatus.OK,
+                                message: EMessageStatus.createdOK,
+                                save: dataDeleted,
+                        });
                 } catch (error) {
                         console.log(error);
                         res.status(500).json({

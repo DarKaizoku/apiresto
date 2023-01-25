@@ -14,6 +14,16 @@ restaurantsRouter.post(
         restaurantsController.postNewRestaurant
 );
 
-restaurantsRouter.put('/', verifyToken, restaurantsController.updateRestaurant);
+restaurantsRouter.put(
+        '/',
+        verifyToken,
+        restaurantsController.updateRestaurantbyName
+);
+
+restaurantsRouter.delete(
+        '/:id',
+        verifyToken,
+        restaurantsController.deleteRestaurantbyId
+);
 
 export default restaurantsRouter;
