@@ -36,7 +36,7 @@ export class RestaurantsController {
                 //const id = req.body.id;
                 const ville: string = req.body.resto_ville;
 
-                if (!ville) {
+                if (!ville || typeof ville !== 'string') {
                         return res.status(404).json({
                                 status: EStatus.FAIL,
                                 message: EMessageStatus.checkData,
@@ -88,7 +88,12 @@ export class RestaurantsController {
                 const oldVille: string = req.body.oldVille;
                 const newVille: string = req.body.newVille;
 
-                if (!newVille || !oldVille) {
+                if (
+                        !newVille ||
+                        !oldVille ||
+                        typeof oldVille !== 'string' ||
+                        typeof newVille !== 'string'
+                ) {
                         //filtre donnée input si null
                         return res.status(404).json({
                                 status: EStatus.FAIL,
