@@ -2,6 +2,8 @@ import {
         BaseEntity,
         Column,
         Entity,
+        JoinColumn,
+        JoinTable,
         ManyToOne,
         PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -17,16 +19,9 @@ export class Menus extends BaseEntity {
         menu_prix: number;
 
         @ManyToOne((type) => Commandes, (commandes) => commandes.menus)
-        /* @JoinTable({
-                name: 'commandes_menus', // table name for the junction table of this relation
-                joinColumn: {
-                        name: 'menus',
-                        referencedColumnName: 'menu_id',
-                },
-                inverseJoinColumn: {
-                        name: 'commandes',
-                        referencedColumnName: 'commande_id',
-                },
-        }) */
+        @JoinColumn({
+                name: 'listCommande',
+                referencedColumnName: 'commande_id',
+        })
         menus: Commandes[] | Commandes;
 }

@@ -4,6 +4,7 @@ import {
         Column,
         Entity,
         JoinColumn,
+        JoinTable,
         OneToMany,
         OneToOne,
         PrimaryGeneratedColumn,
@@ -28,24 +29,17 @@ import { Users } from './Users';
 export class Commandes extends BaseEntity {
         @PrimaryGeneratedColumn()
         commande_id: number;
-        @OneToOne(() => Users, (user) => user.user_id)
-        @JoinColumn()
-        user: number;
-        @OneToOne(() => Restos, (resto) => resto.resto_ville)
-        @JoinColumn({ referencedColumnName: 'resto_ville' })
+        @OneToOne(() => Users, (user) => user.user_id, { cascade: true })
+        @JoinColumn({ name: 'user_id' })
+        user_id: number;
+        @OneToOne(() => Restos, (resto) => resto.resto_ville, { cascade: true })
+        @JoinColumn({
+                name: 'resto_ville',
+                referencedColumnName: 'resto_ville',
+        })
         resto: string;
 
-        @OneToMany(() => Menus, (menu) => menu.menu_id)
-        /* @JoinTable({
-                name: 'commandes_menus', // table name for the junction table of this relation
-                joinColumn: {
-                        name: 'commandes',
-                        referencedColumnName: 'commande_id',
-                },
-                inverseJoinColumn: {
-                        name: 'menus',
-                        referencedColumnName: 'menu_id',
-                },
-        }) */
-        menus: Number[];
+        @OneToOne(() => Menus, (menu) => menu.menu_id, { cascade: true })
+        @JoinColumn({ name: 'menu_id' })
+        menus: Number[] | Menus;
 }
