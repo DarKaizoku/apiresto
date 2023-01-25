@@ -33,9 +33,9 @@ export class MenuController {
     }
 
     async getMenuByName(req: Request, res: Response) {
-        const name = req.body.menu_nom;
+        const nom = req.body.nom;
 
-        if (name === undefined) {
+        if (nom === undefined) {
             return res.status(400).json({
                 status: EStatus.FAIL,
                 message: EMessageStatus.checkData
@@ -43,7 +43,7 @@ export class MenuController {
         }
         try {
             const nameMenu = await menuService.menuName(
-                name
+                nom
             );
 
             if (nameMenu) {
@@ -73,6 +73,21 @@ export class MenuController {
                 message: EMessageStatus.checkData
             });
         }
+        const dataCheck =
+            await menuService.AllMenus();
+        const menucheck = dataCheck.filter(
+            (data) => (data.menu_nom = nom)
+        )
+            ? true
+            : false;
+
+        if (menucheck) {
+            return res.status(400).json({
+                status: EStatus.FAIL,
+                message: EMessageStatus.x2,
+                data: nom,
+            });
+        }
         try {
             const menuAdd = await menuService.addMenu(
                 nom, prix
@@ -97,10 +112,9 @@ export class MenuController {
         const id = parseInt(req.params.id);
         const nom = req.body.nom;
         const prix = req.body.prix;
-        console.log(id);
-        
 
-        if (nom === undefined && prix === null) {
+
+        if (!nom || !prix) {
             return res.status(400).json({
                 status: EStatus.FAIL,
                 message: EMessageStatus.checkData
@@ -108,7 +122,7 @@ export class MenuController {
         }
         try {
             const modMenu = await menuService.upMenu(
-                id ,nom, prix,
+                id, nom, prix,
             );
             if (modMenu) {
                 return res.status(200).json({
@@ -116,6 +130,35 @@ export class MenuController {
                     message: 'Menu modifié',
                     data: modMenu
                 })
+            }
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).json({
+                status: EStatus.ERROR,
+                message: EMessageStatus.m500,
+            });
+        }
+    }
+
+    async deleteMenu(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+
+        if (!id) {
+            return res.status(400).json({
+                status: EStatus.FAIL,
+                message: EMessageStatus.checkData
+            });
+        }
+        try {
+            const byeMenu = await menuService.suppMenu(
+                id
+            ); if (byeMenu) {
+                return res.status(200).json({
+                    status: EStatus.OK,
+                    message: 'Menu supprimé',
+                    data: byeMenu
+                });
             }
         }
         catch (error) {
