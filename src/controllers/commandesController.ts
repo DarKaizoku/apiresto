@@ -30,4 +30,6 @@ export class CommandesController {
                         });
                 }
         }
+
+        async addCommande(req: Request, res: Response) {}
 }
