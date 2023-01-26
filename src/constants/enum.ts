@@ -29,5 +29,9 @@ export enum EMessageStatus {
 
         createdOK = 'La donnée a bien été créée !!',
 
+<<<<<<< HEAD
         DeletedOK = 'La donnée a bien été supprimée !!',
+=======
+        forbidden = `L'utilisateur n'a pas l'authorisation d'accès !!`,
+>>>>>>> 01a32ace7645d0ecc43424d61163099efc00eafb
 }

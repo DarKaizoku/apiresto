@@ -19,6 +19,7 @@ export function verifyToken(req: Request, res: Response, next) {
                                 });
                         } else {
                                 req.body.idToken = decoded.id;
+                                req.body.admin = decoded.admin;
                                 next();
                         }
                 });
