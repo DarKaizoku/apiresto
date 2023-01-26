@@ -28,4 +28,6 @@ export enum EMessageStatus {
         updateKO = 'Modification échouée !!!',
 
         createdOK = 'La donnée a bien été créée !!',
+
+        forbidden = `L'utilisateur n'a pas l'authorisation d'accès !!`,
 }

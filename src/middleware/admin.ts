@@ -1,0 +1,15 @@
+import { Request, Response } from "express";
+import { EMessageStatus, EStatus } from "../constants/enum";
+
+export function verifAdmin (req :Request, res : Response, next){
+    const admin: boolean = req.body.admin
+    if (admin === true) {
+            next()
+    }
+    else{
+        res.status(403).json({
+            status: EStatus.ERROR,
+            message: EMessageStatus.forbidden
+        })
+    }
+}

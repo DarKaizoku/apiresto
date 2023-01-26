@@ -12,6 +12,8 @@ const usersServices = new UsersServices();
 
 export class UsersController {
         async getUsers(req: Request, res: Response) {
+                
+                
                 try {
                         const users = await usersServices.AllUsers();
 
@@ -108,8 +110,9 @@ export class UsersController {
                         const hash = dataUser.password;
                         bcrypt.compare(password, hash, async (err, result) => {
                                 const id = dataUser.user_id;
+                                const admin = dataUser.admin;
                                 const token = jwt.sign(
-                                        { id, password },
+                                        { id, admin },
                                         secreToken
                                 );
 
