@@ -163,7 +163,8 @@ export class RestaurantsController {
                         });
                 }
                 try {
-                        const dataCheck = restaurantsServices.allRestaurants();
+                        const dataCheck =
+                                await restaurantsServices.allRestaurants();
                         if (!dataCheck[0]) {
                                 return res.status(404).json({
                                         status: EStatus.FAIL,
@@ -179,7 +180,7 @@ export class RestaurantsController {
 
                         res.status(200).json({
                                 status: EStatus.OK,
-                                message: EMessageStatus.createdOK,
+                                message: EMessageStatus.DeletedOK,
                                 save: dataDeleted,
                         });
                 } catch (error) {

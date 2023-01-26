@@ -29,17 +29,26 @@ import { Users } from './Users';
 export class Commandes extends BaseEntity {
         @PrimaryGeneratedColumn()
         commande_id: number;
-        @OneToOne(() => Users, (user) => user.user_id, { cascade: true })
+        @OneToOne(() => Users, (user) => user.user_id, {
+                onUpdate: 'CASCADE',
+                onDelete: 'SET NULL',
+        })
         @JoinColumn({ name: 'user_id' })
         user_id: number;
-        @OneToOne(() => Restos, (resto) => resto.resto_ville, { cascade: true })
+        @OneToOne(() => Restos, (resto) => resto.resto_ville, {
+                onUpdate: 'CASCADE',
+                onDelete: 'SET NULL',
+        })
         @JoinColumn({
                 name: 'resto_ville',
                 referencedColumnName: 'resto_ville',
         })
         resto: string;
 
-        @OneToOne(() => Menus, (menu) => menu.menu_id, { cascade: true })
+        @OneToOne(() => Menus, (menu) => menu.menu_id, {
+                onUpdate: 'CASCADE',
+                onDelete: 'RESTRICT',
+        })
         @JoinColumn({ name: 'menu_id' })
-        menus: Number[] | Menus;
+        menus: number;
 }

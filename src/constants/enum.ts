@@ -28,4 +28,6 @@ export enum EMessageStatus {
         updateKO = 'Modification échouée !!!',
 
         createdOK = 'La donnée a bien été créée !!',
+
+        DeletedOK = 'La donnée a bien été supprimée !!',
 }

@@ -11,13 +11,13 @@ export class MenuController {
 
                         if (menus === undefined) {
                                 res.status(404).json({
-                                        status: 'FAIL',
+                                        status: EStatus.FAIL,
                                         message: 'Aucun menu trouvé',
                                         data: null,
                                 });
                         } else {
                                 res.status(200).json({
-                                        satus: 'SUCCESS',
+                                        satus: EStatus.OK,
                                         message: 'Voici les menus',
                                         data: menus,
                                 });

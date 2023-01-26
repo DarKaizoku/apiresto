@@ -45,9 +45,10 @@ export class RestaurantsServices {
 
                 await Restos.remove(dataCheck);
 
-                const dataDeleted = await Restos.findOneByOrFail({
+                const dataDeleted = await Restos.findBy({
                         resto_id: id,
                 });
+
                 if (dataDeleted) {
                         return dataCheck;
                 }

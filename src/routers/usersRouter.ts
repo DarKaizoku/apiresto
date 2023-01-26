@@ -6,7 +6,7 @@ const usersRouter = Router();
 
 const usersController = new UsersController();
 
-usersRouter.get('/',verifyToken, usersController.getUsers);
+usersRouter.get('/', verifyToken, usersController.getUsers);
 
 usersRouter.post('/register', usersController.register);
 

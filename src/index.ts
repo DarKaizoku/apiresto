@@ -4,11 +4,10 @@ import restaurantsRouter from './routers/restaurantsRouter';
 import menusRouter from './routers/menusRouter';
 
 import usersRouter from './routers/usersRouter';
+import commandesRouter from './routers/commandesRouter';
 
 AppDataSource.initialize()
         .then(async () => {
-                console.log('Data Source has been initialized!');
-
                 const app = express();
                 const port = 8080;
 
@@ -40,6 +39,7 @@ AppDataSource.initialize()
                 app.use('/api/users', usersRouter);
                 app.use('/api/restaurants', restaurantsRouter);
                 app.use('/api/menus', menusRouter);
+                app.use('/api/commandes', commandesRouter);
 
                 app.listen(port, () => {
                         console.log(

@@ -1,11 +1,5 @@
 export type TCommande = {
-        commande_id: number;
-
-        user: number;
-
+        user_id: number;
         resto: string;
-
-        menus_nom: string[] | string;
-
-        menus_prix: number[] | string;
+        menus: number | number[];
 };
