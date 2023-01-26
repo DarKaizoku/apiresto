@@ -33,7 +33,6 @@ export class RestaurantsController {
         }
 
         async postNewRestaurant(req: Request, res: Response) {
-                //const id = req.body.id;
                 const ville: string = req.body.resto_ville;
 
                 if (!ville || typeof ville !== 'string') {

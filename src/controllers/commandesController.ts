@@ -31,5 +31,49 @@ export class CommandesController {
                 }
         }
 
-        async addCommande(req: Request, res: Response) {}
+        async addCommande(req: Request, res: Response) {
+                const user = req.body.idToken;
+                const resto: string = req.body.ville;
+                const menu: number = req.body.menu;
+
+                if (
+                        !resto ||
+                        !menu ||
+                        typeof menu !== 'string' ||
+                        typeof menu !== 'number'
+                ) {
+                        return res.status(400).json({
+                                status: EStatus.FAIL,
+                                message: EMessageStatus.checkData,
+                        });
+                }
+
+                try {
+                        const data = await commandesServices.addCommande(
+                                user,
+                                resto,
+                                menu
+                        );
+
+                        if (!data) {
+                                res.status(400).json({
+                                        status: EStatus.FAIL,
+                                        message: EMessageStatus.dataKO,
+                                        data: null,
+                                });
+                        } else {
+                                res.status(200).json({
+                                        status: EStatus.OK,
+                                        message: EMessageStatus.dataOK,
+                                        data: data,
+                                });
+                        }
+                } catch (error) {
+                        console.log(error);
+                        res.status(500).json({
+                                status: EStatus.ERROR,
+                                message: EMessageStatus.m500,
+                        });
+                }
+        }
 }
