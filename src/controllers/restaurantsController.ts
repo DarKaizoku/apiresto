@@ -152,7 +152,7 @@ export class RestaurantsController {
         }
 
         async deleteRestaurantbyId(req: Request, res: Response) {
-                const admin = req.body.admin;
+
                 const resto_id: number = parseInt(req.params.id);
 
                 if (!Number.isFinite(resto_id)) {

@@ -9,4 +9,8 @@ commandesRouter.get('/', commandesController.getAllCommandes);
 
 commandesRouter.post;
 
+commandesRouter.delete('/:id', commandesController.deleteCommandebyId);
+
+commandesRouter.put('/:id', commandesController.updateCommande);
+
 export default commandesRouter;
