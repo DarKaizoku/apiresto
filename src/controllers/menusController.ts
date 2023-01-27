@@ -115,19 +115,19 @@ export class MenuController {
                 try {
                         /*const dataCheck =
                 await menuService.AllMenus();
-            const menucheck = dataCheck.filter(
+        const menucheck = dataCheck.filter(
                 //(data) => ((data.menu_nom === nom) && (data.menu_prix === prix))
                 data => data.menu_nom === nom && data.menu_prix === prix
-            )
-            console.log(menucheck);
+        )
+        console.log(menucheck);
 
-            if (!menucheck[0]) {
+        if (!menucheck[0]) {
                 return res.status(400).json({
-                    status: EStatus.FAIL,
-                    message: EMessageStatus.x2,
-                    data: nom, prix
+                status: EStatus.FAIL,
+                message: EMessageStatus.x2,
+                data: nom, prix
                 });
-            }*/
+        }*/
 
                         const modMenu = await menuService.upMenu(id, nom, prix);
                         if (modMenu) {
@@ -158,18 +158,18 @@ export class MenuController {
 
                 try {
                         /*const menuCheck = menuService.AllMenus();
-            console.log('test');
-            
-            console.log(menuCheck);
-            
-            if (!menuCheck[0]) {
+        console.log('test');
+        
+        console.log(menuCheck);
+        
+        if (!menuCheck[0]) {
                 return res.status(404).json({
-                    status: EStatus.FAIL,
-                    message:
+                status: EStatus.FAIL,
+                message:
                         EMessageStatus.Unknown +
                         `n° menu => ${id}`,
                 });
-            }*/
+        }*/
                         const byeMenu = await menuService.suppMenu(id);
                         if (byeMenu) {
                                 return res.status(200).json({
