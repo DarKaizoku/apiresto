@@ -13,6 +13,7 @@ export class UsersServices {
                 const data = await Users.find({
                         select: {
                                 password: true,
+                                admin: true,
                         },
                         where: { username: name },
                 });

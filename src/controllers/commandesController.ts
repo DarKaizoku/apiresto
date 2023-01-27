@@ -1,10 +1,5 @@
 import { Request, Response } from 'express';
 import { EMessageStatus, EStatus } from '../constants/enum';
-<<<<<<< HEAD
-import { v2Admin, verifAdmin } from '../middleware/admin';
-=======
-import { verifAdmin } from '../middleware/admin';
->>>>>>> 163fcdc208cf3e9f34cfc7ef128a61d917836e6c
 import { CommandesServices } from '../services/commandesServices';
 const commandesServices = new CommandesServices();
 
@@ -39,9 +34,19 @@ export class CommandesController {
                 }
         }
         async getCommandeById(req: Request, res: Response) {
-                const id = parseInt(req.params.id)
+                const id = parseInt(req.params.id);
+
+                if (!id || typeof id !== 'number') {
+                        return res.status(400).json({
+                                status: EStatus.FAIL,
+                                message: EMessageStatus.checkData,
+                                data: '==> id <==',
+                        });
+                }
                 try {
-                        const commandes = await commandesServices.commandeId(id);
+                        const commandes = await commandesServices.commandeId(
+                                id
+                        );
 
                         if (commandes === undefined) {
                                 res.status(404).json({
@@ -135,24 +140,30 @@ export class CommandesController {
                 }
         }
 
-        async updateCommande(req: Request, res: Response, ) {
-
+        async updateCommande(req: Request, res: Response) {
                 const id = parseInt(req.params.id);
 
                 const ville = req.body.ville;
                 const menu = req.body.menu;
 
-                if (!ville || !menu || typeof ville !== 'string' ||
-                        typeof menu !== 'number') {
+                if (
+                        !ville ||
+                        !menu ||
+                        typeof ville !== 'string' ||
+                        typeof menu !== 'number'
+                ) {
                         return res.status(400).json({
                                 status: EStatus.FAIL,
                                 message: EMessageStatus.checkData,
                         });
                 }
 
-
                 try {
-                        const modCommande = await commandesServices.upCommande(id, ville, menu);
+                        const modCommande = await commandesServices.upCommande(
+                                id,
+                                ville,
+                                menu
+                        );
                         if (modCommande) {
                                 return res.status(200).json({
                                         status: EStatus.OK,
@@ -169,7 +180,6 @@ export class CommandesController {
                 }
         }
         async deleteCommandebyId(req: Request, res: Response) {
-
                 const commande_id: number = parseInt(req.params.id);
 
                 if (!Number.isFinite(commande_id)) {
@@ -180,9 +190,12 @@ export class CommandesController {
                         });
                 }
                 try {
-                        const dataCheck =
-                                await commandesServices.getAll();
-                        if (!dataCheck[0]) {
+                        const dataCheck = await commandesServices.getAll();
+
+                        const check = dataCheck.filter(
+                                (data) => data.commande_id === commande_id
+                        );
+                        if (!check[0]) {
                                 return res.status(404).json({
                                         status: EStatus.FAIL,
                                         message:

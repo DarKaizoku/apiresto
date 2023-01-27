@@ -1,7 +1,10 @@
-# Awesome Project Build with TypeORM
+BRIEF : API rest O
 
-Steps to run this project:
+de Jean-Christophe et Arnaud .
 
-1. Run `npm i` command
-2. Setup database settings inside `data-source.ts` file
-3. Run `npm start` command
+voir la documentation de l'API dans le dossier public:
+
+faire:"
+cd public
+npx serve
+"

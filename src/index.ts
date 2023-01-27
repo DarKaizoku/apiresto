@@ -2,6 +2,7 @@ import * as express from 'express';
 import { AppDataSource } from './data-source';
 import restaurantsRouter from './routers/restaurantsRouter';
 import menusRouter from './routers/menusRouter';
+import * as path from 'path';
 
 import usersRouter from './routers/usersRouter';
 import commandesRouter from './routers/commandesRouter';
@@ -12,6 +13,8 @@ AppDataSource.initialize()
                 const port = 8080;
 
                 app.use(express.json());
+
+                app.use('/', express.static(path.join(__dirname, '../public')));
                 app.use(function (req, res, next) {
                         res.setHeader('authorization', '');
                         // Website you wish to allow to connect

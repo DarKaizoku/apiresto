@@ -9,7 +9,6 @@ export class CommandesServices {
                                 //resto: true, //trouver la solution pour cacher le password ou autre donnée !!
                         }, */
                 });
-                console.log(data);
 
                 if (data) {
                         return data;
@@ -59,8 +58,8 @@ export class CommandesServices {
                         listCommandesUser[listCommandesUser.length - 1];
                 if (lastCommande) {
                         return lastCommande;
-                        return undefined;
                 }
+                return undefined;
         }
         async upCommande(
                 user_id: number,

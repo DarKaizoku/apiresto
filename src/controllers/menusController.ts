@@ -49,6 +49,12 @@ export class MenuController {
                                         message: 'Voici le menu demandé :',
                                         data: nameMenu,
                                 });
+                        } else {
+                                res.status(404).json({
+                                        status: EStatus.FAIL,
+                                        message: 'Aucun menu trouvé',
+                                        data: null,
+                                });
                         }
                 } catch (error) {
                         console.log(error);
