@@ -9,6 +9,7 @@ import {
         OneToOne,
         PrimaryGeneratedColumn,
 } from 'typeorm';
+import { TUser } from '../types/TUser';
 import { Menus } from './Menus';
 import { Restos } from './Restos';
 import { Users } from './Users';
@@ -32,12 +33,14 @@ export class Commandes extends BaseEntity {
         @OneToOne(() => Users, (user) => user.user_id, {
                 onUpdate: 'CASCADE',
                 onDelete: 'SET NULL',
+                eager: true,
         })
         @JoinColumn({ name: 'user_id' })
-        user_id: number;
+        user_id: number | TUser;
         @OneToOne(() => Restos, (resto) => resto.resto_ville, {
                 onUpdate: 'CASCADE',
                 onDelete: 'SET NULL',
+                eager: true,
         })
         @JoinColumn({
                 name: 'resto_ville',
@@ -48,6 +51,7 @@ export class Commandes extends BaseEntity {
         @OneToOne(() => Menus, (menu) => menu.menu_id, {
                 onUpdate: 'CASCADE',
                 onDelete: 'RESTRICT',
+                eager: true,
         })
         @JoinColumn({ name: 'menu_id' })
         menus: number;

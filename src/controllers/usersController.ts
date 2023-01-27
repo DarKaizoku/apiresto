@@ -12,8 +12,6 @@ const usersServices = new UsersServices();
 
 export class UsersController {
         async getUsers(req: Request, res: Response) {
-                
-                
                 try {
                         const users = await usersServices.AllUsers();
 

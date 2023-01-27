@@ -23,5 +23,5 @@ export class Menus extends BaseEntity {
                 name: 'listCommande',
                 referencedColumnName: 'commande_id',
         })
-        commande : Commandes[] | Commandes;
+        commande: Commandes[] | Commandes;
 }

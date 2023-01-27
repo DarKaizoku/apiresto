@@ -1,9 +1,15 @@
 import { Commandes } from '../entity/Commandes';
 import { TCommande } from '../types/TCommande';
+import { TUser } from '../types/TUser';
 
 export class CommandesServices {
         async getAll(): Promise<Commandes[] | undefined> {
-                const data = await Commandes.find();
+                const data = await Commandes.find({
+                        relations: {
+                                //resto: true, //trouver la solution pour cacher le password ou autre donnée !!
+                        },
+                });
+                console.log(data);
 
                 if (data) {
                         return data;

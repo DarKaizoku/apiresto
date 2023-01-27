@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import { CommandesController } from '../controllers/commandesController';
+import { verifyToken } from '../middleware/auth';
 
 const commandesRouter = Router();
 
 const commandesController = new CommandesController();
 
-commandesRouter.get('/', commandesController.getAllCommandes);
+commandesRouter.get('/', verifyToken, commandesController.getAllCommandes);
 
-commandesRouter.post;
+commandesRouter.post('/', verifyToken, commandesController.addCommande);
 
 commandesRouter.delete('/:id', commandesController.deleteCommandebyId);
 
