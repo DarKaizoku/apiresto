@@ -55,5 +55,5 @@ export class Commandes extends BaseEntity {
                 eager: true,
         })
         @JoinColumn({ name: 'menu_id' })
-        menus: number;
+        menu: number;
 }

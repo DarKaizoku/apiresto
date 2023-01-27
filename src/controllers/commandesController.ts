@@ -103,7 +103,19 @@ export class CommandesController {
                 }
         }
 
-        async updateCommande(req: Request, res: Response, ) {
+        async updateCommande(req: Request, res: Response, next) {
+                /*const admin: boolean = req.body.admin
+                if (admin !== true) {
+                        return next()
+                }
+                const verifId = req.body.idToken
+                if(verifId !== req.body.user_id){
+                        res.status(403).json({
+                                status: EStatus.ERROR,
+                                message: `Vous n'êtes pas l'utilisateur associé a cette commande !!`
+                        })
+                }*/
+
 
                 const id = parseInt(req.params.id);
 
@@ -137,8 +149,21 @@ export class CommandesController {
                 }
         }
         async deleteCommandebyId(req: Request, res: Response) {
-
+                
+                        
+                const user : number = req.body.idToken;
+                //const userCommande : number = req.body.user_id
                 const commande_id: number = parseInt(req.params.id);
+
+                /*const dataCheckId = commandesServices.commandeId(commande_id);
+                        console.log('test' + dataCheckId);
+                        
+                        if ((await dataCheckId).user_id !== user){
+                                res.status(403).json({
+                                        status: EStatus.ERROR,
+                                        message: `Vous n'êtes pas l'utilisateur associé a cette commande !!`
+                                })
+                                }*/
 
                 if (!Number.isFinite(commande_id)) {
                         return res.status(404).json({
@@ -147,10 +172,16 @@ export class CommandesController {
                                 data: null,
                         });
                 }
-                try {
-                        const dataCheck =
-                                await commandesServices.getAll();
-                        if (!dataCheck[0]) {
+
+                
+                try {   
+                        
+                        const dataCheck =await commandesServices.getAll();
+                        const checkId = (dataCheck).filter(
+                                (data) => data.commande_id === commande_id
+                );
+                        //console.log(checkId);
+                        if (!checkId[0]) {
                                 return res.status(404).json({
                                         status: EStatus.FAIL,
                                         message:
@@ -159,7 +190,7 @@ export class CommandesController {
                                 });
                         }
                         const dataDeleted =
-                                await commandesServices.deleteRestaurant(
+                                await commandesServices.deleteCommande(
                                         commande_id
                                 );
 

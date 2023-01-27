@@ -13,7 +13,7 @@ import { Commandes } from './Commandes';
 @Entity()
 export class Menus extends BaseEntity {
         @PrimaryGeneratedColumn()        
-        @OneToMany(() => Commandes, (commandes) => commandes.menus)
+        @OneToMany(() => Commandes, (commandes) => commandes.menu)
         menu_id: number;
         @Column({ type: 'varchar' })
         menu_nom: string;

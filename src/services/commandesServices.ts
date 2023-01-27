@@ -34,7 +34,7 @@ export class CommandesServices {
                 let newCommande = new Commandes();
                 newCommande.user_id = user_id;
                 newCommande.resto = resto_ville;
-                newCommande.menus = menu_id;
+                newCommande.menu = menu_id;
 
                 await Commandes.save(newCommande);
 
@@ -46,22 +46,23 @@ export class CommandesServices {
                 return undefined;
         }
 
-        async upCommande(user_id: number, resto_ville: string, menu_id: number) {
-                const oldCommande = await Commandes.findOneBy({ commande_id: user_id });
+        async upCommande(id: number, resto_ville: string, menu_id: number) {
+                const oldCommande = await Commandes.findOneBy({ commande_id: id });
 
                 oldCommande.resto = resto_ville;
-                oldCommande.menus = menu_id;
+                oldCommande.menu = menu_id;
 
                 const menuChanged = await Commandes.save(
                         oldCommande
                 )
                 if (menuChanged) {
-                        return menuChanged;
+                        const data = await Commandes.findBy({ commande_id:id });
+                        return data
                 }
                 return undefined;
         }
 
-        async deleteRestaurant(id: number): Promise<Commandes | undefined> {
+        async deleteCommande(id: number): Promise<Commandes | undefined> {
                 const dataCheck = await Commandes.findOneBy({ commande_id: id });
 
                 await Commandes.remove(dataCheck);
