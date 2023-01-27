@@ -10,7 +10,12 @@ export class UsersServices {
                 return undefined;
         }
         async getDataUserbyName(name: string): Promise<Users | undefined> {
-                const data = await Users.findBy({ username: name });
+                const data = await Users.find({
+                        select: {
+                                password: true,
+                        },
+                        where: { username: name },
+                });
 
                 if (data[0]) {
                         return data[0];

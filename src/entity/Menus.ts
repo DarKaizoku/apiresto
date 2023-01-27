@@ -12,18 +12,11 @@ import { Commandes } from './Commandes';
 
 @Entity()
 export class Menus extends BaseEntity {
-        @PrimaryGeneratedColumn()        
+        @PrimaryGeneratedColumn()
         @OneToMany(() => Commandes, (commandes) => commandes.menu)
         menu_id: number;
         @Column({ type: 'varchar' })
         menu_nom: string;
         @Column({ type: 'numeric' })
         menu_prix: number;
-
-
-        @JoinColumn({
-                name: 'listCommande',
-                referencedColumnName: 'commande_id',
-        })
-        commande: Commandes[] | Commandes;
 }

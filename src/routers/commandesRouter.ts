@@ -8,7 +8,12 @@ const commandesRouter = Router();
 
 const commandesController = new CommandesController();
 
-commandesRouter.get('/', verifyToken, commandesController.getAllCommandes);
+commandesRouter.get(
+        '/',
+        verifyToken,
+        verifAdmin,
+        commandesController.getAllCommandes
+);
 
 commandesRouter.get('/:id', commandesController.getCommandeById);
 

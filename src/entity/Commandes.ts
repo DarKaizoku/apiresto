@@ -1,16 +1,11 @@
 import { type } from 'os';
 import {
         BaseEntity,
-        Column,
         Entity,
         JoinColumn,
-        JoinTable,
         ManyToOne,
-        OneToMany,
-        OneToOne,
         PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TUser } from '../types/TUser';
 import { Menus } from './Menus';
 import { Restos } from './Restos';
 import { Users } from './Users';
@@ -37,7 +32,7 @@ export class Commandes extends BaseEntity {
                 eager: true,
         })
         @JoinColumn({ name: 'user_id' })
-        user_id: number | TUser;
+        user_id: number;
         @ManyToOne(() => Restos, (resto) => resto.resto_ville, {
                 onUpdate: 'CASCADE',
                 onDelete: 'SET NULL',

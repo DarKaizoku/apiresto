@@ -14,6 +14,6 @@ export class Restos extends BaseEntity {
         @PrimaryGeneratedColumn()
         resto_id: number;
         @Column({ type: 'varchar' })
-        @OneToMany(() => Commandes, (commandes) => commandes.resto)
+        @OneToMany(() => Commandes, (commande) => commande.resto)
         resto_ville: string;
 }
