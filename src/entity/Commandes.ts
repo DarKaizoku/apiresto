@@ -5,6 +5,7 @@ import {
         Entity,
         JoinColumn,
         JoinTable,
+        ManyToOne,
         OneToMany,
         OneToOne,
         PrimaryGeneratedColumn,
@@ -30,14 +31,14 @@ import { Users } from './Users';
 export class Commandes extends BaseEntity {
         @PrimaryGeneratedColumn()
         commande_id: number;
-        @OneToOne(() => Users, (user) => user.user_id, {
+        @ManyToOne(() => Users, (user) => user.user_id, {
                 onUpdate: 'CASCADE',
                 onDelete: 'SET NULL',
                 eager: true,
         })
         @JoinColumn({ name: 'user_id' })
         user_id: number | TUser;
-        @OneToOne(() => Restos, (resto) => resto.resto_ville, {
+        @ManyToOne(() => Restos, (resto) => resto.resto_ville, {
                 onUpdate: 'CASCADE',
                 onDelete: 'SET NULL',
                 eager: true,
@@ -48,7 +49,7 @@ export class Commandes extends BaseEntity {
         })
         resto: string;
 
-        @OneToOne(() => Menus, (menu) => menu.menu_id, {
+        @ManyToOne(() => Menus, (menu) => menu.menu_id, {
                 onUpdate: 'CASCADE',
                 onDelete: 'RESTRICT',
                 eager: true,

@@ -17,6 +17,15 @@ export class CommandesServices {
                 return undefined;
         }
 
+        async commandeId(id : number){
+                const data = await Commandes.findBy({ commande_id: id });
+                if (data[0]) {
+                        return data[0];
+                }
+                return undefined;
+        }
+        
+
         async addCommande(
                 user_id: number,
                 resto_ville: string,

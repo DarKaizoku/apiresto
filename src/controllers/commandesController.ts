@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { EMessageStatus, EStatus } from '../constants/enum';
+import { verifAdmin } from '../middleware/admin';
 import { CommandesServices } from '../services/commandesServices';
 const commandesServices = new CommandesServices();
 
@@ -29,6 +30,32 @@ export class CommandesController {
                         });
                 }
         }
+        async getCommandeById(req: Request, res: Response) {
+                const id = parseInt(req.params.id)
+                try {
+                        const commandes = await commandesServices.commandeId(id);
+
+                        if (commandes === undefined) {
+                                res.status(404).json({
+                                        status: EStatus.FAIL,
+                                        message: 'Aucune commande trouvée',
+                                        data: null,
+                                });
+                        } else {
+                                res.status(200).json({
+                                        satus: EStatus.OK,
+                                        message: 'Voici la commande',
+                                        data: commandes,
+                                });
+                        }
+                } catch (error) {
+                        console.log(error);
+                        res.status(500).json({
+                                status: EStatus.ERROR,
+                                message: EMessageStatus.m500,
+                        });
+                }
+        }
 
         async addCommande(req: Request, res: Response) {
                 const user = req.body.idToken;
@@ -38,7 +65,7 @@ export class CommandesController {
                 if (
                         !resto ||
                         !menu ||
-                        typeof menu !== 'string' ||
+                        typeof resto !== 'string' ||
                         typeof menu !== 'number'
                 ) {
                         return res.status(400).json({
@@ -76,18 +103,21 @@ export class CommandesController {
                 }
         }
 
-        async updateCommande(req: Request, res: Response) {
+        async updateCommande(req: Request, res: Response, ) {
+
                 const id = parseInt(req.params.id);
 
                 const ville = req.body.ville;
                 const menu = req.body.menu;
 
-                if (!ville || !menu) {
+                if (!ville || !menu || typeof ville !== 'string' ||
+                        typeof menu !== 'number') {
                         return res.status(400).json({
                                 status: EStatus.FAIL,
                                 message: EMessageStatus.checkData,
                         });
                 }
+
 
                 try {
                         const modCommande = await commandesServices.upCommande(id, ville, menu);
@@ -107,7 +137,7 @@ export class CommandesController {
                 }
         }
         async deleteCommandebyId(req: Request, res: Response) {
-                
+
                 const commande_id: number = parseInt(req.params.id);
 
                 if (!Number.isFinite(commande_id)) {
