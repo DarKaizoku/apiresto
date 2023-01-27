@@ -62,12 +62,12 @@ export class CommandesServices {
                 return undefined;
         }
         async upCommande(
-                user_id: number,
+                id: number,
                 resto_ville: string,
                 menu_id: number
         ) {
                 const oldCommande = await Commandes.findOneBy({
-                        commande_id: user_id,
+                        commande_id: id,
                 });
 
                 oldCommande.resto = resto_ville;
@@ -76,7 +76,8 @@ export class CommandesServices {
                 const menuChanged = await Commandes.save(oldCommande);
 
                 if (menuChanged) {
-                        return menuChanged;
+                        const data = await Commandes.findBy({ commande_id:id });
+                        return data
                 }
                 return undefined;
         }
