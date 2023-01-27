@@ -74,13 +74,14 @@ export class CommandesServices {
                 oldCommande.menu = menu_id;
 
                 const menuChanged = await Commandes.save(oldCommande);
+
                 if (menuChanged) {
                         return menuChanged;
                 }
                 return undefined;
         }
 
-        async deleteRestaurant(id: number): Promise<Commandes | undefined> {
+        async deleteCommande(id: number): Promise<Commandes | undefined> {
                 const dataCheck = await Commandes.findOneBy({
                         commande_id: id,
                 });

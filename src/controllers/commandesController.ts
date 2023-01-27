@@ -204,7 +204,7 @@ export class CommandesController {
                                 });
                         }
                         const dataDeleted =
-                                await commandesServices.deleteRestaurant(
+                                await commandesServices.deleteCommande(
                                         commande_id
                                 );
 
