@@ -1,13 +1,13 @@
 import { Commandes } from '../entity/Commandes';
-import { TCommande } from '../types/TCommande';
-import { TUser } from '../types/TUser';
+import { Menus } from '../entity/Menus';
+import { Restos } from '../entity/Restos';
 
 export class CommandesServices {
         async getAll(): Promise<Commandes[] | undefined> {
                 const data = await Commandes.find({
-                        relations: {
+                        /* relations: {
                                 //resto: true, //trouver la solution pour cacher le password ou autre donnée !!
-                        },
+                        }, */
                 });
                 console.log(data);
 
@@ -17,22 +17,41 @@ export class CommandesServices {
                 return undefined;
         }
 
-        async addCommande(
-                user_id: number,
-                resto_ville: string,
-                menu_id: number
-        ): Promise<Commandes | undefined> {
-                let newCommande = new Commandes();
-                newCommande.user_id = user_id;
-                newCommande.resto = resto_ville;
-                newCommande.menus = menu_id;
+        async getDataExist() {
+                const dataRestos: Restos[] = await Restos.find();
+                const dataMenus: Menus[] = await Menus.find();
 
-                await Commandes.save(newCommande);
+                const listRestos = dataRestos.map((data) => data.resto_ville);
+                const listMenusId = dataMenus.map((data) => data.menu_id);
 
-                const newData = await Commandes.findOneBy({ user_id });
+                const newData = {
+                        listR: listRestos,
+                        idMenus: listMenusId,
+                };
 
                 if (newData) {
                         return newData;
+                }
+                return undefined;
+        }
+
+        async addCommande(
+                user_id: number,
+                resto: string,
+                menu: number
+        ): Promise<Commandes | undefined> {
+                let newCommande = new Commandes();
+                newCommande.user_id = user_id;
+                newCommande.resto = resto;
+                newCommande.menu = menu;
+
+                await Commandes.save(newCommande);
+
+                const listCommandesUser = await Commandes.find();
+                const lastCommande: Commandes =
+                        listCommandesUser[listCommandesUser.length - 1];
+                if (lastCommande) {
+                        return lastCommande;
                 }
                 return undefined;
         }

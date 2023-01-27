@@ -1,6 +1,10 @@
+import { Menus } from '../entity/Menus';
+import { Restos } from '../entity/Restos';
+import { Users } from '../entity/Users';
+
 export type TCommande = {
-        commande_id: number;
-        user_id: number;
-        resto: string;
-        menus: number | number[];
+        commande: number;
+        user: Users;
+        resto: Restos;
+        menus: Menus;
 };
