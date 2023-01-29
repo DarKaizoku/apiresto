@@ -13,6 +13,8 @@ export class RestaurantsServices {
         async addRestaurant(ville: string): Promise<Restos | undefined> {
                 const newRestaurant = new Restos();
                 newRestaurant.resto_ville = ville;
+                console.log(newRestaurant);
+
                 await Restos.save(newRestaurant);
 
                 const newRestaurantOK = await Restos.findOneBy({

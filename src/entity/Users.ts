@@ -20,6 +20,6 @@ export class Users extends BaseEntity {
         username: string;
         @Column({ type: 'varchar', select: false }) // le select permet l'affichage ou non de la donnée lors de la requete xD
         password: string;
-        @Column({ type: 'boolean', default: false })
+        @Column({ type: 'boolean', default: false, select: false })
         admin: boolean;
 }

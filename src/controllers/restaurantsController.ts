@@ -151,7 +151,6 @@ export class RestaurantsController {
         }
 
         async deleteRestaurantbyId(req: Request, res: Response) {
-
                 const resto_id: number = parseInt(req.params.id);
 
                 if (!Number.isFinite(resto_id)) {
@@ -164,7 +163,12 @@ export class RestaurantsController {
                 try {
                         const dataCheck =
                                 await restaurantsServices.allRestaurants();
-                        if (!dataCheck[0]) {
+                        const check = dataCheck.filter(
+                                (data) => data.resto_id === resto_id
+                        );
+                        console.log(check);
+
+                        if (!check[0]) {
                                 return res.status(404).json({
                                         status: EStatus.FAIL,
                                         message:
