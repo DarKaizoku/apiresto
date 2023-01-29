@@ -14,12 +14,3 @@ export function verifAdmin(req: Request, res: Response, next) {
                 });
         }
 }
-
-export function v2Admin(data, next) {
-        if (data === true) {
-                console.log('ADMIN OK');
-
-                return true;
-        }
-        return false;
-}

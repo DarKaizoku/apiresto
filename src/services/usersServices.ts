@@ -2,7 +2,13 @@ import { Users } from '../entity/Users';
 
 export class UsersServices {
         async AllUsers(): Promise<Users[] | undefined> {
-                const users: Users[] | undefined = await Users.find();
+                const users: Users[] | undefined = await Users.find({
+                        select: {
+                                user_id: true,
+                                username: true,
+                                admin: true,
+                        },
+                });
 
                 if (users[0]) {
                         return users;
@@ -12,6 +18,7 @@ export class UsersServices {
         async getDataUserbyName(name: string): Promise<Users | undefined> {
                 const data = await Users.find({
                         select: {
+                                user_id: true,
                                 password: true,
                                 admin: true,
                         },

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { EMessageStatus, EStatus } from '../constants/enum';
-import { verifAdmin } from '../middleware/admin';
 import { CommandesServices } from '../services/commandesServices';
 const commandesServices = new CommandesServices();
 
@@ -142,20 +141,9 @@ export class CommandesController {
         }
 
         async updateCommande(req: Request, res: Response, next) {
-                /*const admin: boolean = req.body.admin
-                if (admin !== true) {
-                        return next()
-                }
-                const verifId = req.body.idToken
-                if(verifId !== req.body.user_id){
-                        res.status(403).json({
-                                status: EStatus.ERROR,
-                                message: `Vous n'êtes pas l'utilisateur associé a cette commande !!`
-                        })
-                }*/
-
                 const id = parseInt(req.params.id);
-
+                const user_id = req.body.idToken;
+                const admin: boolean = req.body.admin;
                 const ville = req.body.ville;
                 const menu = req.body.menu;
 
@@ -172,16 +160,63 @@ export class CommandesController {
                 }
 
                 try {
-                        const modCommande = await commandesServices.upCommande(
-                                id,
-                                ville,
-                                menu
+                        const idCheck = await commandesServices.getAll();
+                        const checkId = idCheck.filter(
+                                (data) => data.commande_id === id
                         );
-                        if (modCommande) {
-                                return res.status(200).json({
-                                        status: EStatus.OK,
-                                        message: EMessageStatus.updateOK,
-                                        data: modCommande,
+                        if (!checkId[0]) {
+                                return res.status(404).json({
+                                        status: EStatus.FAIL,
+                                        message:
+                                                EMessageStatus.Unknown +
+                                                `n° de Commande => ${id}`,
+                                });
+                        }
+                        const dataId = await commandesServices.commandeId(id);
+                        const userIdTest = dataId.user_id['user_id'];
+
+                        if (admin || user_id === userIdTest) {
+                                const dataCheck =
+                                        await commandesServices.getDataExist();
+                                const villeCheck = dataCheck.listR.filter(
+                                        (data) => data === ville
+                                );
+
+                                if (!villeCheck[0]) {
+                                        return res.status(400).json({
+                                                status: EStatus.FAIL,
+                                                message: EMessageStatus.Unknown,
+                                                data: ville,
+                                        });
+                                }
+                                const menuCheck = dataCheck.idMenus.filter(
+                                        (data) => data === menu
+                                );
+
+                                if (!menuCheck[0]) {
+                                        return res.status(400).json({
+                                                status: EStatus.FAIL,
+                                                message: EMessageStatus.Unknown,
+                                                data: menu,
+                                        });
+                                }
+                                const modCommande =
+                                        await commandesServices.upCommande(
+                                                id,
+                                                ville,
+                                                menu
+                                        );
+                                if (modCommande[0]) {
+                                        return res.status(200).json({
+                                                status: EStatus.OK,
+                                                message: EMessageStatus.updateOK,
+                                                data: modCommande,
+                                        });
+                                }
+                        } else {
+                                res.status(403).json({
+                                        status: EStatus.FAIL,
+                                        message: EMessageStatus.forbidden,
                                 });
                         }
                 } catch (error) {
@@ -193,19 +228,9 @@ export class CommandesController {
                 }
         }
         async deleteCommandebyId(req: Request, res: Response) {
-                const user: number = req.body.idToken;
-                //const userCommande : number = req.body.user_id
+                const user_id: number = req.body.idToken;
+                const admin: boolean = req.body.admin;
                 const commande_id: number = parseInt(req.params.id);
-
-                /*const dataCheckId = commandesServices.commandeId(commande_id);
-                        console.log('test' + dataCheckId);
-                        
-                        if ((await dataCheckId).user_id !== user){
-                                res.status(403).json({
-                                        status: EStatus.ERROR,
-                                        message: `Vous n'êtes pas l'utilisateur associé a cette commande !!`
-                                })
-                                }*/
 
                 if (!Number.isFinite(commande_id)) {
                         return res.status(404).json({
@@ -220,7 +245,6 @@ export class CommandesController {
                         const checkId = dataCheck.filter(
                                 (data) => data.commande_id === commande_id
                         );
-                        //console.log(checkId);
                         if (!checkId[0]) {
                                 return res.status(404).json({
                                         status: EStatus.FAIL,
@@ -229,16 +253,28 @@ export class CommandesController {
                                                 `n° de Commande => ${commande_id}`,
                                 });
                         }
-                        const dataDeleted =
-                                await commandesServices.deleteCommande(
-                                        commande_id
-                                );
+                        const dataId = await commandesServices.commandeId(
+                                commande_id
+                        );
+                        const userIdTest = dataId.user_id['user_id'];
 
-                        res.status(200).json({
-                                status: EStatus.OK,
-                                message: EMessageStatus.DeletedOK,
-                                save: dataDeleted,
-                        });
+                        if (admin || user_id === userIdTest) {
+                                const dataDeleted =
+                                        await commandesServices.deleteCommande(
+                                                commande_id
+                                        );
+
+                                res.status(200).json({
+                                        status: EStatus.OK,
+                                        message: EMessageStatus.DeletedOK,
+                                        save: dataDeleted,
+                                });
+                        } else {
+                                res.status(403).json({
+                                        status: EStatus.FAIL,
+                                        message: EMessageStatus.forbidden,
+                                });
+                        }
                 } catch (error) {
                         console.log(error);
                         res.status(500).json({

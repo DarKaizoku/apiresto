@@ -4,11 +4,7 @@ import { Restos } from '../entity/Restos';
 
 export class CommandesServices {
         async getAll(): Promise<Commandes[] | undefined> {
-                const data = await Commandes.find({
-                        /* relations: {
-                                //resto: true, //trouver la solution pour cacher le password ou autre donnée !!
-                        }, */
-                });
+                const data = await Commandes.find({});
 
                 if (data) {
                         return data;
@@ -16,8 +12,9 @@ export class CommandesServices {
                 return undefined;
         }
 
-        async commandeId(id: number) {
+        async commandeId(id: number): Promise<Commandes | undefined> {
                 const data = await Commandes.findBy({ commande_id: id });
+
                 if (data[0]) {
                         return data[0];
                 }
@@ -61,11 +58,7 @@ export class CommandesServices {
                 }
                 return undefined;
         }
-        async upCommande(
-                id: number,
-                resto_ville: string,
-                menu_id: number
-        ) {
+        async upCommande(id: number, resto_ville: string, menu_id: number) {
                 const oldCommande = await Commandes.findOneBy({
                         commande_id: id,
                 });
@@ -75,9 +68,10 @@ export class CommandesServices {
 
                 const menuChanged = await Commandes.save(oldCommande);
 
+                const data = await Commandes.findBy({ commande_id: id });
+
                 if (menuChanged) {
-                        const data = await Commandes.findBy({ commande_id:id });
-                        return data
+                        return data;
                 }
                 return undefined;
         }

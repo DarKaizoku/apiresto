@@ -46,7 +46,7 @@ export class Commandes extends BaseEntity {
 
         @ManyToOne(() => Menus, (menu) => menu.menu_id, {
                 onUpdate: 'CASCADE',
-                onDelete: 'RESTRICT',
+                onDelete: 'SET NULL',
                 eager: true,
         })
         @JoinColumn({ name: 'menu_id' })

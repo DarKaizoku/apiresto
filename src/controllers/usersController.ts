@@ -26,6 +26,7 @@ export class UsersController {
                                         status: EStatus.OK,
                                         message: 'Voici tous les users :',
                                         data: users,
+                                        astuce: 'Pour voir le Hash du password, activez le select du password dans Users Entity',
                                 });
                         }
                 } catch (error) {
@@ -57,7 +58,7 @@ export class UsersController {
                                         status: EStatus.FAIL,
                                         message:
                                                 EMessageStatus.x2 +
-                                                ` => ${dataUser.username} <=`,
+                                                ` => ${name} <=`,
                                 });
                         }
                         bcrypt.hash(password, 10, async (err, hash) => {
@@ -97,6 +98,7 @@ export class UsersController {
                         const dataUser = await usersServices.getDataUserbyName(
                                 name
                         );
+
                         if (!dataUser) {
                                 return res.status(400).json({
                                         status: EStatus.FAIL,
@@ -119,6 +121,7 @@ export class UsersController {
                                                 status: EStatus.OK,
                                                 message: EMessageStatus.Connected,
                                                 token: token,
+                                                info: `le token est laissé apparent pour faciliter l'utilisation de l'api`,
                                         });
                                 } else {
                                         res.status(401).json({
