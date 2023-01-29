@@ -14,7 +14,6 @@ import { Commandes } from './Commandes';
 @Unique(['username'])
 export class Users extends BaseEntity {
         @PrimaryGeneratedColumn()
-        @OneToMany(() => Commandes, (commande) => commande.user_id)
         user_id: number;
         @Column({ type: 'varchar' })
         username: string;
